@@ -116,7 +116,7 @@ boolean axGraph =true,ayGraph=true,azGraph=true,gxGraph=true,gyGraph=true,gzGrap
 
 boolean toggleServo=false,toggleWriteServo=false,toggleWing=false,toggleWriteWing=false,toggleLive=false,toggleWriteServoLive=false,toggleWriteWingLive=false,
         toggleSaveHeli=false,toggleWaitHeli=false,toggleGimbal=false,
-	graphEnabled = false,Mag_=false,gimbal=false, servoStretch=false,camTrigger=false,ExportServo=false,
+  graphEnabled = false,Mag_=false,gimbal=false, servoStretch=false,camTrigger=false,ExportServo=false,
         toggleTrigger=false,ServosActive=false;
 
 static int RCThro = 3, RCRoll = 0, RCPitch =1, RCYaw =2, RCAUX1=4, RCAUX2=5, RCAUX3=6, RCAUX4=7;
@@ -228,7 +228,7 @@ void create_ServoGraphics(){
      ServoSliderMIN[i]  =  controlP5.addSlider("MIN "+i,sMin,1500,0,xServ+80,yServ+40+Step,40,12).setDecimalPrecision(0).setLabel("").hide().moveTo("ServoSettings");
      ServoSliderMAX[i]  =  controlP5.addSlider("MAX "+i,1500,sMax,0,xServ+125,yServ+40+Step,40,12).setDecimalPrecision(0).setLabel("").hide().moveTo("ServoSettings");
      Step+=20; }
-	 
+   
  // ServoGraphics For AirPlane SC & DC
 if(multiType == PPM_TO_SERVO || multiType == AIRPLANE ){
   controlP5.getTab("ServoSettings").show();
@@ -910,10 +910,10 @@ public void evaluateCommand(byte cmd, int dataSize) {
              //ServoSliderC[2].setMin(4).setMax(10);
              if(ServoMID[2]==4) {Cau0();}else if(ServoMID[2]==5) {Cau1();}else if(ServoMID[2]==6) {Cau2();}else if(ServoMID[2]==7){Cau3();}else{CauClear();}
          }
-	 for( i=0;i<8;i++){
-	   ServoSliderMIN[i].setValue(ServoMIN[i]); //Update sliders
-	   ServoSliderMAX[i].setValue(ServoMAX[i]);
-	   ServoSliderC[i].setValue(ServoMID[i]);
+   for( i=0;i<8;i++){
+     ServoSliderMIN[i].setValue(ServoMIN[i]); //Update sliders
+     ServoSliderMAX[i].setValue(ServoMAX[i]);
+     ServoSliderC[i].setValue(ServoMID[i]);
            if (servoRATE[i]>127){ // Reverse/Rate servos
              Bbox.deactivate(i); RateSlider[i].setValue(abs(servoRATE[i]-256));
            }else{
@@ -989,11 +989,11 @@ public void evaluateCommand(byte cmd, int dataSize) {
            }
          
        }else if (multiType == PPM_TO_SERVO ) { // PPM_TO_SERVO
-	 for( i=0;i<8;i++){
-	   ServoSliderMIN[i].setValue(ServoMIN[i]); //Update sliders
-	   ServoSliderMAX[i].setValue(ServoMAX[i]);
-	   ServoSliderC[i]  .setValue(ServoMID[i]);
-	 // Reverse/Rate servos
+   for( i=0;i<8;i++){
+     ServoSliderMIN[i].setValue(ServoMIN[i]); //Update sliders
+     ServoSliderMAX[i].setValue(ServoMAX[i]);
+     ServoSliderC[i]  .setValue(ServoMID[i]);
+   // Reverse/Rate servos
            if (servoRATE[i]>127){
              Bbox.deactivate(i); RateSlider[i].setValue(abs(servoRATE[i]-256));
            }else{Bbox.activate(i); RateSlider[i].setValue(abs(servoRATE[i]));}
@@ -1134,7 +1134,7 @@ void draw() {
         }
       }
       if (!toggleLive) {
-	buttonLIVE.setColorBackground(red_).setLabel("   Go Live");
+  buttonLIVE.setColorBackground(red_).setLabel("   Go Live");
         buttonRESET.show();
         controlP5.getTooltip().register("LIVE_SERVO","Enable Live changes to the Servos.") ;
       }else{
@@ -1865,7 +1865,7 @@ void draw() {
     motSlider[0].setPosition(xMot+50,yMot+30).setHeight(90).setCaptionLabel("Mot").show();
     TX_StickSlider[RCPitch].setCaptionLabel("Elev");
     TX_StickSlider[RCYaw ].setCaptionLabel("Rudd");
-	
+  
     if(toggleWing){
       int Step=yServ;
       ServoSliderC[3].show().setPosition(xServ+100 ,Step+0+60);//.setCaptionLabel("  Center");
@@ -1876,7 +1876,7 @@ void draw() {
       ServoSliderMIN[4].show().setCaptionLabel("  Min") .setPosition(xServ+100  ,Step+80+80);
       ServoSliderMAX[4].show().setCaptionLabel("  Max") .setPosition(xServ+180 ,Step+80+80);
     }
-	  
+    
   } else if (multiType == Y4) { //Y4
     drawMotor(       +15+0,      +size, byteMP[0], 'R');
     drawMotor(       +size,      -size, byteMP[1], 'L');
@@ -2589,8 +2589,8 @@ void DEBUG4(boolean theFlag) {debug4Graph = theFlag;}
 
 String ActiveTab="default";
 public void controlEvent(ControlEvent theEvent) {
-  if (theEvent.isGroup()) if (theEvent.name()=="portComList") InitSerial(theEvent.group().getValue()); // initialize the serial port selected
-  if (theEvent.isGroup()) if (theEvent.name()=="baudList") GUI_BaudRate=(int)(theEvent.group().getValue());  // Set GUI_BaudRate to selected.
+  if (theEvent.getName()=="portComList") InitSerial(theEvent.getValue()); // initialize the serial port selected
+  if (theEvent.getName()=="baudList") GUI_BaudRate=(int)(theEvent.getValue());  // Set GUI_BaudRate to selected.
   if (theEvent.isTab()) { ActiveTab= theEvent.getTab().getName();  println("Switched to: "+ActiveTab);
     int tabN= +theEvent.getTab().getId();
     scaleSlider.moveTo(ActiveTab);
